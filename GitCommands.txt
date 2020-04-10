@@ -1,0 +1,40 @@
+git log
+git rm --cached /tmp/test.txt 	удаляет файл из отслеживаемых
+git rm --cached -r tmp 			удаляет каталог tmp из отслеживаемых
+git commit -a -m "Comment"		комит,где а - всё что в отслеживаемых(!), уже добавленных
+git add test.txt				добавить файл в отслеживаемые
+git commit --amend -m "..."		добавляет к предыдщему коммиту (вносит изменения)
+git revert someID				вернуть изменения	
+git help						справка
+git help show					справка по команде
+git clone						клонирует удалённый репозиторий. Создаёт копию на локальном компьютере. Необходим URL c репозиторием
+git remote -v					просмотр привязанных репозиториев к локальному
+git push - u orogin master		origin говорит на какой удалённый репозитарий мы отправляем
+git remote add origin *URL*		привязывает удалённый репозиторий к локальному хранлищу. origin - имя, которое присваивается удалённому репозиторию. Имя репозитария (не ветки!)
+git remote -v					снова
+git push -u origin master		пушим 
+
+
+*** GitHub ***
+echo "# Netology" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/ManulTech/Netology.git
+git push -u origin master
+***
+
+git branch -f master HEAD~3		переносит ветку master на 3 коммита вверх от HEAD
+
+README.MD 						markdown. Можно посмотреть на guides.gihub.com
+#								HEADER 1 level
+## 								HEADER 2 level
+###								HEADER 3 level
+**text**						жирный текст
+*								ненумерованный список
+1. 								нумерованный список
+[Текст](http://...)				гиперссылка
+![Текст](http://...)			изображение
+```html							отображение кода
+html код
+```
