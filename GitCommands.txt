@@ -1,3 +1,4 @@
+1 часть
 git log
 git rm --cached /tmp/test.txt 	удаляет файл из отслеживаемых
 git rm --cached -r tmp 			удаляет каталог tmp из отслеживаемых
@@ -9,11 +10,10 @@ git help						справка
 git help show					справка по команде
 git clone						клонирует удалённый репозиторий. Создаёт копию на локальном компьютере. Необходим URL c репозиторием
 git remote -v					просмотр привязанных репозиториев к локальному
-git push - u orogin master		origin говорит на какой удалённый репозитарий мы отправляем
+git push - u origin master		origin говорит на какой удалённый репозитарий мы отправляем
 git remote add origin *URL*		привязывает удалённый репозиторий к локальному хранлищу. origin - имя, которое присваивается удалённому репозиторию. Имя репозитария (не ветки!)
 git remote -v					снова
 git push -u origin master		пушим 
-
 
 *** GitHub ***
 echo "# Netology" >> README.md
@@ -38,3 +38,97 @@ README.MD 						markdown. Можно посмотреть на guides.gihub.com
 ```html							отображение кода
 html код
 ```
+
+2 часть
+Gitflow - методология названия веток
+
+master branch
+current branch
+
+git branch feature/payment		создаёт ветку feature/payment
+git branch						просмотр всех веток
+git checkout feature/payment	переключение на другую ветку
+git push -u origin master		зальёт на git ветку master
+git push -u origin feature/payment	зальёт на git ветку feature/payment
+git checkout master				переключение на master
+git merge --no--ff feature/payment	объединение текущей ветки с feature/payment
+git status
+git log
+git push
+git log --oneline --graph		граф коммитов (текущее состояние сверху первой строкой)
+git push						заливаем на гит
+git log --oneline --graph		пожет, что и локальный master и master на origin синхронизированы
+git log --oneline --graph feature/payment история ветки feature/payment
+
+git branch feature/metrika
+git branch feature/analitica
+git checkout feature/metrika
+git commit -a -m "Yandex Metrica"
+git checkout feature/analitica
+git commit -a -m "Google Analytics"
+git log -- graph --oneline --all			показать все ветки
+git checkout master
+git merge --no--ff feature/metrika
+git merge --no--ff feature/analitica 		возникает конфликт. Конфликт разрешается вручную
+git status
+git add 						файл
+git commit -a -m "Analytics merged"			когда конфликт решён
+git log --oneline --graph
+git push
+
+git branch -d <имя ветки>					удалить ЛОКАЛЬНУЮ ветку
+git push --delete origin feature/payment	удалить УДАЛЁННУЮ ветку после чего удалить локальную:
+git branch -d feature/payment				удалить ЛОКАЛЬНУЮ ветку
+git tag -a v1.0 -m "Версия 1.0"				добавление тега для последнего/текущего коммита в ветке
+git show v1.0
+git tag -a v1.0 -m "Версия 1.0" <commit id>	добавление тега по ID
+git push --tags								По умолчанию git не отправляет теги (git push)
+git tag -d v1.0								Удалить тег, если ещё не отправили на GITHUB. Если отправили, то: 
+git push --delete origin 1.0
+git tag -d v1.0		
+
+История изменений 2.6
+git log 									история для малых проектов
+git log -- <file name>						история конкретного файла
+git show <commit id> -- index.html			изменения файла в коммите. Можно по тегу
+git log -p -- <имя файла>					история	И изменения в конкретном файле
+git log -- grep 'something'					поиск коммита по слову
+git log -S'строка' -p						поиск коммиторв по конкретной строке, связанных с добавлением/изменением этой строки
+git log --all								поиск по всем веткам (иначе по текущей)
+git blame -- <path>							авторство изменения
+
+Откат изменений
+Ветка предствляет из себя некий динамический указатель на коммит в истории.
+HEAD определяет в какой ветке мы сейчас находимся, так как содержит в себе ссылку на ветку (ветка - это указатель на коммит).
+git log --oneline
+git checkout <commit ID>
+git log --oneline
+git commit -a -m "detached"
+git log --oneline
+git checkout master
+--no-ff										fast forward
+git checkout -b feature/ff
+git commit -a -m "FF"
+git checkout master
+git log --oneline
+git merge feature/ff
+git log --oneline --graph --all
+git checkout -b feature/no-ff
+git commit  -a -m "no-ff"
+git log --oneline --graph --all
+
+git reset
+hard - передвигаем указатель на заданный коммит, не сохраняя изменений
+soft - передвигаем указатель на заданный коммит, при этом предыдущие изменения сохраняются в рабочем каталоге и INDEX
+mixed - передвигаем указатель на заданный коммит, при этом предыдущие изменения сохраняются в рабочем каталоге, но не в INDEX'е
+git reset --<mode> <commit ID>
+git reset --<mode> HEAD~<num>
+
+3.1
+git branch <local branch> <origin/remote-branch> 	забирает локальные ветки при клонировании из удалённого репозитория
+git branch --all покажет все все удалённые ветки
+git checkout --track <remote branch>				забирает локальные ветки при клонировании из удалённого репозитория
+git push -u origin master							флаг -u создаёт связь между локальной веткой (которую пушим на сервер) и удалённой
+git fetch <origin>									забирает изменения с удалённого сервера (если есть) и сдвигает указатели удалённой ветки не нужную позицию. Работает с той веткой, в которой сейчас работаешь	
+
+
