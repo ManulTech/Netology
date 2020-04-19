@@ -24,7 +24,7 @@ git remote add origin https://github.com/ManulTech/Netology.git
 git push -u origin master
 ***
 
-git branch -f master HEAD~3		переносит ветку master на 3 коммита вверх от HEAD
+git branch -f master HEAD~3		переносит ветку master на 3 коммита назад от HEAD
 
 README.MD 						markdown. Можно посмотреть на guides.gihub.com
 #								HEADER 1 level
