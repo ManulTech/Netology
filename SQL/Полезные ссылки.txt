@@ -1,0 +1,6 @@
+SQL для начинающих - docs.google.com/file/d/0BzjGbQIp2abGcW1sYjZvUG9GZmc/edit?pli=1 
+Тренажеры по SQL - sql-ex.ru/?Lang=0 
+Стиль написания запросов - sqlstyle.guide/ru 
+Проектирование, архитектура: А.Д. Хомоненко, В.М. Цыганков, М.Г. Мальцев «Базы данных. Учебник для ВУЗов» - bookfi.net/dl/690340/95229d 
+С.Д. Кузнецов Основы современных баз данных - citforum.ru/database/osbd/contents.shtml 
+Coronel С., Morris S "Database Systems: Design, Implementation and Management" - pdfdrive.com/database-systems-design-implementation-management-d186191720.html
