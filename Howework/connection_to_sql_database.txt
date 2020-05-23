@@ -1,0 +1,14 @@
+Пример подсоединения к MySQL
+import pymysql.cursors
+connection = pymysql.connect(host=host,
+                               user=user,
+                               password=password,
+                               db=db,
+                               charset='utf8mb4',
+                               cursorclass=pymysql.cursors.DictCursor)
+pd.read_sql('select * from table', connection)
+
+Пример для Postgres
+import psycopg2
+conn = psycopg2.connect("dbname='...' user='...' host='...' password='...'")
+pd.read_sql('SELECT * FROM ratings limit 10;', conn)
