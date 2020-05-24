@@ -1,6 +1,3 @@
---select rental_duration, rental_rate, round(rental_rate / rental_duration, 4) as "Cost_rental"	
---from film;
-
 select title, description, round(rental_rate / rental_duration, 4) as "cost_rental"	
 from film f
 order by Cost_rental desc, title asc;
