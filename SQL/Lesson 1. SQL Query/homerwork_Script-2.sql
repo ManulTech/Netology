@@ -1,9 +1,6 @@
---Основная часть:
----перечислить все таблицы и первичные ключи в базе данных. Формат решения в виде таблицы:
 select first_name || ' ' || last_name as "Full Name", activebool, active
 from customer c 
-where active = '1'
-order by "Full Name";
+where active = '0' order by "Full Name";
 
 select title from film f 
 where release_year = '2006'
@@ -13,7 +10,7 @@ order by payment_date desc
 limit 10
 
 
-select table_catalog, constraint_name 
+select table_catalog, constraint_name, table_name 
 from information_schema.table_constraints
-where constraint_type = 'PRIMARY KEY'
+where constraint_catalog = 'dvd-rental' and constraint_type = 'PRIMARY KEY'
 
