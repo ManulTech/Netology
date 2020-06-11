@@ -1,202 +1,139 @@
---Создать другую схему
-create schema book_store;
+SELECT 
+	userId,
+	movieId,
+	rating,
+row_number() OVER (PARTITION BY userId ORDER BY rating DESC) AS movie_rank
+FROM (
+	SELECT DISTINCT
+		userId, 
+		movieId, 
+		rating
+	from 
+		ratings
+	WHERE
+		userId <> 1 LIMIT 100
+	)
+	AS sample
+ORDER BY 
+	userId,
+	rating DESC,
+	movie_rank
 
---Сменить схему
-set search_path to book_store;
+select * from ratings
 
+select
+	title,
+	first_name || ' '|| last_name as full_name,
+	count(f.film_id) over (partition by f.film_id) as movies_count 	
+from film f
+join film_actor as fa on f.film_id = fa.film_id 
+join actor as a on fa.actor_id = a.actor_id 
+order by movies_count desc
 
-CREATE TABLE author(
-	author_id Serial PRIMARY KEY,
-	full_name varchar(30) NOT null,
-	nickname varchar(30),
-	born_date date not null
-);
+-----
+with cte_name (column_list) as (
+	cte_query_definition
+	)
+statement ;
+----
 
+with recursive r as (...)
+select 	
+	1 as i,
+	1 as factorial
+union
+	select
+	 	i + 1 as i,
+	 	factorial  (i + 1) as factorial 
+	from r
+	where
+		i < 10
+	)
 
-create table book(
-	book_id serial primary key,
-	book_name varchar(100) not null,
-	pub_year int,
-	check (pub_year > 0)
-);
+	select * from r
 
-
-
-
-
-insert into author 
-(full_name, nickname, born_date)
-values 
-('Жюль Габриэ́ль Верн', null, '08.02.1828'),
-('Михаи́л Ю́рьевич Ле́рмонтов', 'Гр. Диарбекир', '03.10.1814'),
-('Харуки Мураками', null, '12.01.1949');
-
-select * from public.film f ;
-
-insert into book
-(book_name, pub_year)
-values
-('Двадцать тысяч льё под водой', 1916),
-('Бородино', 1837),
-('Герой нашего времени', 1840),
-('Норвежский лес', 1980),
-('Хроники заводной птицы', 1994);
-
-insert into book
-(book_name, pub_year)
-values
-('Двадцать тысяч льё под водой', -1916);
-
-
-
-alter table author 
-add column born_place varchar(150);
-
-alter table book 
-add column author_id int;
-
---alter table author 
---drop column born_place;
-
-alter table book 
-add constraint book_author foreign key (author_id) references author(author_id);
-
-
-alter table автор
-add column книга_айди int;
-
-alter table автор
-add column дополнение varchar(100);
-
-alter table автор
-add constraint автор_бук foreign key (книга_айди) references book(book_id);
-
-alter table автор
-add constraint автор_бук_2 foreign key (дополнение) references book(book_name);
-
-
-update author
-set born_place = 'Франция';
-
-update author
-set born_place = 'Российская империя'
-where author_id in (2, 3);
-
-update author
-set born_place = 'Япония 2'
-where (author_id = 3) and (full_name like '%Мураками%');
-
-
-
-update book 
-set author_id = 1
-where book_id = 1
-
-update book 
-set author_id = 2
-where book_id in (2, 3)
-
-update book 
-set author_id = 3
-where book_id not in (1, 2, 3)
-
-
+	
+with sold_by_person as (
+	select
+		first_name || ' '|| last_name as full_name,
+		count (p.amount)
+	from 
+		staff s
+join payment p on p.staff_id = s.staff_id
+group by full_name)
 select *
-from book b 
-join author a on a.author_id = b.author_id ;
+--	full_name
+--	amount
+from 
+	sold_by_person
+--group by full_name
 
+drop view view_name
 
-delete from book 
-where author_id = 1;
-
-delete from author 
-where author_id = 1;
-
-delete from book;
-delete from author ;
-
-select * from book b;
-select * from author a ;
-
-drop table book ;
-drop table author ;
-
-
-create table orders (
-	order_id serial primary key,
-	info json not null
+create or replace view view_name as (
+	select 
+		c.first_name || ' '|| c.last_name as full_name,
+		c.email,
+		f.title,
+		i.film_id,
+		max(r.last_update)
+		from customer as c
+	join rental as r using (customer_id)
+	join inventory as i using (inventory_id)
+	join film as f using (film_id)
+	group by (full_name, c.email, f.title, i.film_id, r.last_update)
+--	where r.last_update = (select max(r.last_update) from rental as r) 
 )
+	
+select * from view_name
 
-select * from orders;
+select r.last_update from rental as r
 
+create materialized view some_view as (
+select 
+)
+with data
 
-INSERT INTO orders (info)
-VALUES
- (
-'{ "customer": "John Doe", "items": {"product": "Beer","qty": 6}}'
- ),
- (
-'{ "customer": "Lily Bush", "items": {"product": "Diaper","qty": 24}}'
- ),
- (
-'{ "customer": "Josh William", "items": {"product": "Toy Car","qty": 1}}'
- ),
- (
-'{ "customer": "Mary Clark", "items": {"product": "Toy Train","qty": 2}}'
- );
+drop materialized some_view
 
+select 
+ film_id,
+ count(*) rating
+ from film f 
+ where f.film_id > 100
+ group by film_id
+ 
+ select rating from film f 
+ 
+ select 
+ 	customer_id,
+ 	rental_date,
+ 	row_number() over (partition by customer_id order by rental_date desc) as rental_number 	 
+ from rental
+ join inventory as i using (inventory_id)
+ join film as f using (film_id)
+ order by customer_id desc 
+ 
+ with create materialized view my_view as (
+ select
+ 	c.customer_id,
+ 	count(f.film_id),
+ 	f.special_features
+ from 
+ 	customer as c
+ join 
+ 	staff s using(staff_id)
+ )
 
-select info -> 'customer'
-from orders;
-
-select order_id, info ->> 'customer'
-from orders
-where order_id = 1;
-
-
-select avg((info -> 'items' ->> 'qty')::int)
-from orders;
-
-
-select film_id, special_features 
-from public.film
-order by film_id ;
-
-
-
-select film_id, unnest(special_features)
-from public.film
-order by film_id ;
-
-
-select film_id, special_features, array_length(special_features, 1)
-from public.film
-order by film_id ;
-
-
-
-select film_id, special_features, array_length(special_features, 1)
-from public.film
-where special_features <@ array['Trailers', 'Deleted Scenes']
-order by film_id ;
-
-
-select film_id, special_features, array_length(special_features, 1)
-from public.film
-where special_features @> array['Trailers', 'Deleted Scenes']
-order by film_id ;
-
-
-select film_id, special_features, array_length(special_features, 1)
-from public.film
-where special_features = array['Trailers', 'Deleted Scenes']
-order by film_id ;
-
-select film_id, array_append(special_features, 'Val'), array_length(special_features, 1)
-from public.film
-where special_features = array['Trailers', 'Deleted Scenes']
-order by film_id ;
-
-select film_id, unnest(special_features)
-from public.film
-order by film_id ;
+ 
+ select
+	c.customer_id,
+ 	sum(r.rental_id) as rental_amount
+ from 
+ 	customer as c
+ join rental as r using(customer_id)
+ join inventory as i using(inventory_id)
+ join film as f using(film_id)
+ where 'Behind the Scenes'  = any (f.special_features)
+ group by (c.customer_id, f.special_features)
+ order by customer_id desc

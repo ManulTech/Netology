@@ -1,0 +1,13 @@
+Добрый день, коллеги.
+Еще раз напоминаю логический порядок обработки инструкции select:
+ON
+JOIN
+WHERE
+GROUP BY
+WITH CUBE или WITH ROLLUP
+HAVING
+SELECT
+DISTINCT
+ORDER BY
+В начало
+Соответственно все, что выполняется до select не знает об алиасах в select.

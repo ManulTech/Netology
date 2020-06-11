@@ -1,0 +1,60 @@
+
+db test 
+db test 
+db test 
+use netology switched to db netology 
+db netology 
+db.createCollection('students' ) 
+db.students.insert ({ firstname: "Andrey",
+  lastname: "Petrov",
+  age: 12,
+  subjects: ["literature", "history", "mathematics"] })
+
+db.students.find() 
+
+db.students.insert ({ firstname: "Alexey",
+  lastname: "Ivanov",
+  age: 25,
+  subjects: ["history", "mathematics"] })
+
+db.students.find().pretty()
+db.students.insertMany([{ firstname: "Andrey",
+  lastname: "Vetrov",
+  age: 55,
+  subjects: ["physics", "anatomy"] },
+  { firstname: "Ivan",
+  lastname: "Vetrov",
+  age: 16,
+  subjects: ["physics", "anatomy"] },
+  {
+  firstname: "Ivan",
+  lastname: "Alexeev",
+  age: 24,
+  subjects: ["chemistry", "literature"]
+  }
+  ])
+
+
+db.students.find({firstname : 'Andrey' }) 
+db.students.find({firstname : 'Andrey' , lastname : 'Petrov' }) 
+db.students.find({firstname : 'Andrey' }, {age : 1 }) 
+db.students.find({firstname : 'Andrey' }, {age : 1 , subjects : 1 }) 
+db.students.find({firstname : 'Andrey' }, {age : 0 }) 
+db.students.find({subjects : 'literature' }) 
+db.students.find().sort({age : 1 }) 
+db.students.find().sort({age :-1 }) 
+db.students.find().sort({age : -1 , firstname:1 }) 
+db.students.find().limit(2) 
+db.students.find().sort({age :1 }).limit(2 ) 
+db.students.find().skip(1 ) 
+db.students.find().count() 
+db.students.find({}, {age :1 }).count() 
+db.students.distinct('firstname') 
+db.students.find ({'age' : {'$gt' :20 }}) 
+db.students.insert({'firstname' : 'Igor' , 'lastname' : 'Sidorov' , 'age' :35 , 'subjects' : ['math' , 'literature' ]})
+db.students.find ({'firstname' : {'$in' : ['Igor' , 'Ivan' ]}}) 
+db.students.find ({'$and' : [{'firstname' : {'$in' : ['Igor' , 'Ivan' ]}}, {'age' : {'$gt' :20 }}]}) 
+db.students.update ({'age' :12 }, {'$set' : {'age' :13 , 'firstname' : 'Andry' }})
+db.students.remove ({'firstname' : 'Igor' })
+db.students.remove ({})
+db.students.drop() 
