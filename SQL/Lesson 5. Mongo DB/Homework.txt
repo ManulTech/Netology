@@ -1,0 +1,14 @@
+use roo
+db.createCollection('users')
+db.users.insertMany( [
+{
+	name: {first: "Alexey", last: "Ivanov"},
+	contact: {phone: {type: "cell", number: "+7-999-999-99-99"}}},
+{	
+	name: {first: "Parad", last: "Kamazov"},
+	contact: {phone: {type: "cell", number: "+7-111-111-11-11"}}}
+] )
+
+db.users.find()
+db.users.find({}, {"name": "first"})
+db.users.find({"name.first": "Alexey"})
