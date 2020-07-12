@@ -1,0 +1,6 @@
+xls = pd.ExcelFile('excel_file_path.xls')
+# Now you can list all sheets in the file
+xls.sheet_names
+# ['house', 'house_extra', ...]
+# to read just one sheet to dataframe:
+df = pd.read_excel(file_name, sheetname="house")

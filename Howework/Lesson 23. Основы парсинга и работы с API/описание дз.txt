@@ -1,0 +1,1 @@
+https://github.com/obulygin/PYDA_homeworks/blob/master/web_scraping/web_scraping.ipynb
